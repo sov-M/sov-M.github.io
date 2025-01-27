@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap" rel="stylesheet">
     <style>
         body {
+            font-family: "Bad Script", serif;
             margin: 0;
             padding: 0;
             width: 100%;
@@ -36,15 +37,16 @@
         .main-form {
             width: 1000px;
             height: 650px;
+
             background-color: #525252d2;
             border-radius: 50px;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(255, 4, 255, 0.7);
+            /* Тень для формы */
             transition: height 0.5s ease;
-            /* Плавная анимация изменения высоты */
         }
 
         .main-form h1 {
@@ -55,11 +57,16 @@
             margin: 20px 0;
             color: aliceblue;
             font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(255, 3, 3, 0.89);
+            /* Тень для текста */
         }
 
         .main-form label {
             font-size: 18px;
             margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(255, 18, 18, 0.952);
+            /* Тень для текста */
+
         }
 
         .main-form input[type="number"] {
@@ -69,6 +76,8 @@
             border: 1px solid #ccc;
             font-size: 16px;
             margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            /* Тень для поля ввода */
         }
 
         .main-form button {
@@ -80,11 +89,15 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            /* Тень для кнопки */
         }
 
         .main-form button:hover {
             background-color: red;
             scale: 1.5;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+            /* Увеличенная тень при наведении */
         }
 
         .main-form #result {
@@ -93,6 +106,8 @@
             text-align: center;
             color: #ffffff;
             font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            /* Тень для текста */
         }
 
         .time {
@@ -100,12 +115,12 @@
             bottom: 10px;
             right: 10px;
             background-color: rgba(0, 0, 0, 0.6);
-            /* Полупрозрачный фон */
             padding: 10px 15px;
             border-radius: 10px;
             color: aliceblue;
             font-size: 16px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            /* Тень для блока времени */
         }
 
         .time p {
@@ -116,7 +131,8 @@
             width: 100%;
             margin-top: 20px;
             overflow: hidden;
-
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            /* Тень для details */
         }
 
         details summary {
@@ -126,6 +142,8 @@
             color: white;
             border-radius: 10px;
             text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            /* Тень для summary */
         }
 
         details[open] {
@@ -151,6 +169,8 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            /* Тень для таблицы */
         }
 
         th,
@@ -163,6 +183,46 @@
         th {
             background-color: #f2f2f200;
         }
+
+        /* Стили для менюшки с историей */
+        .history-menu {
+            position: fixed;
+            top: 50%;
+            right: -300px;
+            /* Начальное положение за пределами экрана */
+            transform: translateY(-50%);
+            width: 250px;
+            height: auto;
+            background-color: #525252d2;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(255, 4, 255, 0.7);
+            transition: right 0.5s ease;
+            /* Плавное появление */
+            z-index: 1000;
+        }
+
+        .history-menu h2 {
+            text-align: center;
+            font-family: "Bad Script", serif;
+            font-size: 24px;
+            color: aliceblue;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(255, 3, 3, 0.89);
+        }
+
+        .history-menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .history-menu ul li {
+            font-size: 16px;
+            color: aliceblue;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(255, 18, 18, 0.952);
+        }
     </style>
 </head>
 
@@ -172,9 +232,8 @@
         <div class="main-form">
             <h1>Рассчёт максимального количества баллов</h1>
             <label for="amount">Введите сумму:</label>
-            <input type="number" id="amount" name="amount" onkeypress="handleKeyPress(event)"
-                placeholder="Введите сумму">
-            <button onclick="calculatePoints()">Рассчитать</button>
+            <input type="number" id="amount" maxlength="9" name="amount" placeholder="Введите сумму">
+            <button>Рассчитать</button>
             <p id="result"></p>
 
             <details id="details">
@@ -253,9 +312,14 @@
                 <p>Текущее время: <time id="currentTime"></time></p>
             </div>
         </div>
+        <div class="history-menu">
+            <h2>История подсчётов</h2>
+            <ul id="history-list"></ul>
+        </div>
     </div>
 
     <script>
+
         const details = document.querySelector('details');
 
         details.addEventListener('toggle', () => {
@@ -267,14 +331,72 @@
             }
         });
 
+        const historyList = document.getElementById('history-list'); // Список истории
+        const maxHistoryEntries = 12; // Максимальное количество записей в истории
+
+        // Флаг для предотвращения дублирования вызовов
+        let isCalculating = false;
+
+        // Обработка нажатия Enter
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Предотвращаем стандартное поведение
+                if (!isCalculating) {
+                    calculatePoints();
+                }
+            }
+        }
+
+        // Показать менюшку с историей
+        function showHistoryMenu() {
+            const historyMenu = document.querySelector('.history-menu');
+            if (historyMenu) {
+                historyMenu.style.right = '20px'; // Появление менюшки
+            }
+        }
+
+        // Добавить запись в историю
+        function addToHistory(amount, points) {
+            if (!historyList) return; // Проверяем, что элемент существует
+
+            const listItem = document.createElement('li');
+            const currentTime = new Date().toLocaleTimeString(); // Текущее время в формате HH:MM:SS
+            listItem.textContent = `Сумма: ${amount}, Баллы: ${points}, Время: ${currentTime}`;
+
+            // Добавляем новую запись в начало списка
+            historyList.insertBefore(listItem, historyList.firstChild);
+
+            // Если записей больше 20, удаляем последнюю
+            if (historyList.children.length > maxHistoryEntries) {
+                historyList.removeChild(historyList.lastChild);
+            }
+        }
+
+        // Обновленная функция calculatePoints
         function calculatePoints() {
-            const amount = parseFloat(document.getElementById('amount').value);
+            if (isCalculating) return; // Если уже выполняется расчет, выходим
+            isCalculating = true; // Устанавливаем флаг
+
+            const amountInput = document.getElementById('amount');
+            if (!amountInput) {
+                console.error('Поле ввода не найдено');
+                isCalculating = false;
+                return;
+            }
+
+            const amount = parseFloat(amountInput.value);
+            if (isNaN(amount) || amount < 0) {
+                alert('Пожалуйста, введите корректную сумму.');
+                isCalculating = false;
+                return;
+            }
+
             let maxPoints = 0;
 
             if (amount >= 1 && amount <= 299) {
-                maxPoints = amount * 1.00; // 1 к 1
+                maxPoints = amount * 1.00;
             } else if (amount >= 300 && amount <= 999) {
-                maxPoints = amount * 0.50; // 1 к 0.5
+                maxPoints = amount * 0.50;
             } else if (amount >= 1000 && amount <= 4999) {
                 maxPoints = amount * 0.20;
             } else if (amount >= 5000 && amount <= 9999) {
@@ -284,26 +406,46 @@
             } else if (amount >= 20000 && amount <= 24999) {
                 maxPoints = amount * 0.10;
             } else if (amount >= 25000 && amount <= 79999) {
-                maxPoints = amount * 0.04; // 4%
+                maxPoints = amount * 0.04;
             } else if (amount >= 80000) {
-                maxPoints = 4000.00; // Фиксированное значение для суммы 80 000 руб и более
+                maxPoints = 4000.00;
             }
 
-            document.getElementById('result').innerText = `Максимальное количество баллов: ${maxPoints.toFixed(0)} (свыше согласовать с менеджером).`;
-        }
-
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                calculatePoints();
+            const resultText = `Максимальное количество баллов: ${maxPoints.toFixed(0)} (свыше согласовать с менеджером).`;
+            const resultElement = document.getElementById('result');
+            if (resultElement) {
+                resultElement.innerText = resultText;
             }
+
+            // Добавляем запись в историю
+            addToHistory(amount, maxPoints.toFixed(0));
+
+            // Показываем менюшку с историей
+            showHistoryMenu();
+
+            isCalculating = false; // Сбрасываем флаг после завершения расчета
         }
 
-        var timeElement = document.getElementById('currentTime');
-        setInterval(function () {
-            var currentTime = new Date();
-            timeElement.textContent = currentTime.toLocaleTimeString();
-        }, 1000);
+        // Назначение обработчика на кнопку "Рассчитать"
+        const calculateButton = document.querySelector('.main-form button');
+        if (calculateButton) {
+            calculateButton.addEventListener('click', calculatePoints);
+        }
 
+        // Назначение обработчика на поле ввода для Enter
+        const amountInput = document.getElementById('amount');
+        if (amountInput) {
+            amountInput.addEventListener('keypress', handleKeyPress);
+        }
+
+
+        if (amountInput) {
+            amountInput.addEventListener('input', () => {
+                if (amountInput.value.length > 9) {
+                    amountInput.value = amountInput.value.slice(0, 9); // Обрезаем до 9 символов
+                }
+            });
+        }
     </script>
 </body>
 
