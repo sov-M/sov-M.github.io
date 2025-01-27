@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Расчет баллов</title>
+    <link rel="icon" href="andrey.ico">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -66,7 +67,7 @@
                 <td>1 – 299 руб</td>
                 <td>100%</td>
                 <td>-</td>
-                <td>299 ББ</td>
+                <td>30.00</td>
                 <td rowspan="5">начисление свыше допустимого % - должны согласовываться с менеджером 
 		<br>
 		<img src="andrey.jpg" width="126" height="126" alt="lorem"></td>
@@ -75,7 +76,7 @@
                 <td>300 – 999 руб</td>
                 <td>50% </td>
                 <td>-</td>
-                <td>300 ББ</td>
+                <td>300.66</td>
             </tr>
             <tr>
                 <td>1 000 – 4 999 руб</td>
@@ -119,8 +120,8 @@
         </tbody>
     </table>
 
-    <label for="amount">Введите сумму:</label>
-    <input type="number" id="amount" name="amount" onkeypress="handleKeyPress(event)">
+    <label for="amount" >Введите сумму:</label>
+    <input type="number" id="amount" name="amount" onkeypress="handleKeyPress(event)" placeholder="введите сумму">
     <button onclick="calculatePoints()">Рассчитать</button>
 
     <p id="result"></p>
@@ -149,7 +150,7 @@
                 maxPoints = 4000.00; // Фиксированное значение для суммы 80 000 руб и более
             }
 
-            document.getElementById('result').innerText = `Максимальное количество баллов: ${maxPoints.toFixed(2)} свыше согласовать с менеджером.`;
+            document.getElementById('result').innerText = `Максимальное количество баллов: ${maxPoints.toFixed(0)} свыше согласовать с менеджером.`;
         }
 
         function handleKeyPress(event) {
