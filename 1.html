@@ -6,16 +6,149 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Расчет баллов</title>
     <link rel="icon" href="andrey.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap" rel="stylesheet">
     <style>
         body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            background-image: url(vod.jpg);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             font-family: Arial, sans-serif;
-            margin: 20px;
+            color: aliceblue;
+        }
+
+        .main-div {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+
+        }
+
+        .main-form {
+            width: 1000px;
+            height: 650px;
+            background-color: #525252d2;
+            border-radius: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: height 0.5s ease;
+            /* Плавная анимация изменения высоты */
+        }
+
+        .main-form h1 {
+            text-align: center;
+            font-family: "Bad Script", serif;
+            font-weight: 600;
+            font-style: normal;
+            margin: 20px 0;
+            color: aliceblue;
+            font-size: 36px;
+        }
+
+        .main-form label {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .main-form input[type="number"] {
+            padding: 10px;
+            width: 300px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .main-form button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .main-form button:hover {
+            background-color: #45a049;
+        }
+
+        .main-form #result {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: center;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .time {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            /* Полупрозрачный фон */
+            padding: 10px 15px;
+            border-radius: 10px;
+            color: aliceblue;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .time p {
+            margin: 0;
+        }
+
+        details {
+            width: 100%;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        details summary {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        details[open] {
+            height: 100%;
+        }
+
+        details>table {
+            margin-top: 10px;
+            animation: openClose 0.5s ease forwards;
+        }
+
+        @keyframes openClose {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-top: 10px;
         }
 
         th,
@@ -26,32 +159,150 @@
         }
 
         th {
-            background-color: #f2f2f2;
-        }
-
-        input[type="number"] {
-            padding: 8px;
-            width: 200px;
-        }
-
-        button {
-            padding: 8px 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
+            background-color: #f2f2f200;
         }
     </style>
 </head>
 
 <body>
 
-    <h2>Расчет максимального количества баллов</h2>
+    <div class="main-div">
+        <div class="main-form">
+            <h1>Рассчёт максимального количества баллов</h1>
+            <label for="amount">Введите сумму:</label>
+            <input type="number" id="amount" name="amount" onkeypress="handleKeyPress(event)"
+                placeholder="Введите сумму">
+            <button onclick="calculatePoints()">Рассчитать</button>
+            <p id="result"></p>
 
+            <details id="details">
+                <summary>Таблица начислений.</summary>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Комментарии</th>
+                            <th>Допустимые % от стоимости товара</th>
+                            <th>Минимальное количество ББ</th>
+                            <th>Максимальное количество ББ</th>
+                            <th>Согласование менеджеров</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1 – 299 руб</td>
+                            <td>100%</td>
+                            <td>-</td>
+                            <td>300 ББ</td>
+                            <td rowspan="5">начисление свыше допустимого % - должны согласовываться с менеджером
+                                <br>
+                                <img src="andrey.jpg" width="126" height="126" alt="lorem">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>300 – 999 руб</td>
+                            <td>50% </td>
+                            <td>-</td>
+                            <td>500 ББ</td>
+                        </tr>
+                        <tr>
+                            <td>1 000 – 4 999 руб</td>
+                            <td>20%</td>
+                            <td>300 ББ</td>
+                            <td>1000 ББ</td>
+                        </tr>
+                        <tr>
+                            <td>5 000 – 9 999 руб</td>
+                            <td>15%</td>
+                            <td>500 ББ</td>
+                            <td>1500 ББ</td>
+                        </tr>
+                        <tr>
+                            <td>10 000 – 19 999 руб</td>
+                            <td>10%</td>
+                            <td>500 ББ</td>
+                            <td>2000 ББ</td>
+                        </tr>
+                        <tr>
+                            <td>20 000 – 24 999 руб</td>
+                            <td>10%</td>
+                            <td>500 ББ</td>
+                            <td>2500 ББ</td>
+                            <td rowspan="3">Начисление свыше 2500 - согласовать с менеджером
+                                <br>
+                                <img src="andrey.jpg" width="126" height="126" alt="lorem">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>25 000 – 79 999 руб</td>
+                            <td>4%</td>
+                            <td>500 ББ</td>
+                            <td>3000 ББ</td>
+                        </tr>
+                        <tr>
+                            <td>80 000 руб и более</td>
+                            <td>-</td>
+                            <td>1000 ББ</td>
+                            <td>4000 ББ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </details>
+            <div class="time">
+                <p>Текущее время: <time id="currentTime"></time></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const details = document.querySelector('details');
+
+        details.addEventListener('toggle', () => {
+            const form = document.querySelector('.main-form');
+            if (details.open) {
+                form.style.height = '850px'; // Увеличенная высота
+            } else {
+                form.style.height = '650px'; // Оригинальная высота
+            }
+        });
+
+        function calculatePoints() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            let maxPoints = 0;
+
+            if (amount >= 1 && amount <= 299) {
+                maxPoints = amount * 1.00; // 1 к 1
+            } else if (amount >= 300 && amount <= 999) {
+                maxPoints = amount * 0.50; // 1 к 0.5
+            } else if (amount >= 1000 && amount <= 4999) {
+                maxPoints = amount * 0.20;
+            } else if (amount >= 5000 && amount <= 9999) {
+                maxPoints = amount * 0.15;
+            } else if (amount >= 10000 && amount <= 19999) {
+                maxPoints = amount * 0.10;
+            } else if (amount >= 20000 && amount <= 24999) {
+                maxPoints = amount * 0.10;
+            } else if (amount >= 25000 && amount <= 79999) {
+                maxPoints = amount * 0.04; // 4%
+            } else if (amount >= 80000) {
+                maxPoints = 4000.00; // Фиксированное значение для суммы 80 000 руб и более
+            }
+
+            document.getElementById('result').innerText = `Максимальное количество баллов: ${maxPoints.toFixed(0)} (свыше согласовать с менеджером).`;
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                calculatePoints();
+            }
+        }
+
+        var timeElement = document.getElementById('currentTime');
+        setInterval(function () {
+            var currentTime = new Date();
+            timeElement.textContent = currentTime.toLocaleTimeString();
+        }, 1000);
+
+    </script>
 </body>
 
 </html>
