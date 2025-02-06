@@ -11,10 +11,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap" rel="stylesheet">
     <style>
         body {
+            font-family: "Bad Script", serif;
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100vh;
+            min-height: 100vh;
             background-image: url(vod.jpg);
             background-size: cover;
             background-position: center;
@@ -25,26 +26,27 @@
 
         .main-div {
             width: 100%;
-            height: 100%;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .main-form {
-            width: 1000px;
-            height: 650px;
+            width: 100%;
+            max-width: 1000px;
+            height: auto;
             background-color: #525252d2;
             border-radius: 50px;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(255, 4, 255, 0.7);
             transition: height 0.5s ease;
-            /* Плавная анимация изменения высоты */
         }
 
         .main-form h1 {
@@ -55,20 +57,24 @@
             margin: 20px 0;
             color: aliceblue;
             font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(255, 3, 3, 0.89);
         }
 
         .main-form label {
             font-size: 18px;
             margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(255, 18, 18, 0.952);
         }
 
         .main-form input[type="number"] {
             padding: 10px;
-            width: 300px;
+            width: 100%;
+            max-width: 300px;
             border-radius: 10px;
             border: 1px solid #ccc;
             font-size: 16px;
             margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         .main-form button {
@@ -80,10 +86,13 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         .main-form button:hover {
-            background-color: #45a049;
+            background-color: red;
+            scale: 1.5;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
         }
 
         .main-form #result {
@@ -92,6 +101,7 @@
             text-align: center;
             color: #ffffff;
             font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .time {
@@ -99,12 +109,11 @@
             bottom: 10px;
             right: 10px;
             background-color: rgba(0, 0, 0, 0.6);
-            /* Полупрозрачный фон */
             padding: 10px 15px;
             border-radius: 10px;
             color: aliceblue;
             font-size: 16px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
 
         .time p {
@@ -115,6 +124,7 @@
             width: 100%;
             margin-top: 20px;
             overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         details summary {
@@ -124,6 +134,7 @@
             color: white;
             border-radius: 10px;
             text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         details[open] {
@@ -149,6 +160,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         th,
@@ -161,6 +173,121 @@
         th {
             background-color: #f2f2f200;
         }
+
+        .history-menu {
+            position: fixed;
+            top: 50%;
+            right: -300px;
+            transform: translateY(-50%);
+            width: 250px;
+            height: auto;
+            background-color: #525252d2;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(255, 4, 255, 0.7);
+            transition: right 0.5s ease;
+            z-index: 1000;
+        }
+
+        .history-menu h2 {
+            text-align: center;
+            font-family: "Bad Script", serif;
+            font-size: 24px;
+            color: aliceblue;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(255, 3, 3, 0.89);
+        }
+
+        .history-menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .history-menu ul li {
+            font-size: 16px;
+            color: aliceblue;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(255, 18, 18, 0.952);
+        }
+
+        @media (max-width: 768px) {
+            .main-form {
+                width: 90%;
+                padding: 15px;
+            }
+
+            .main-form h1 {
+                font-size: 28px;
+            }
+
+            .main-form input[type="number"] {
+                width: 100%;
+            }
+
+            .main-form button {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .time {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+
+            .history-menu {
+                width: 200px;
+                padding: 15px;
+            }
+
+            .history-menu h2 {
+                font-size: 20px;
+            }
+
+            .history-menu ul li {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-form h1 {
+                font-size: 24px;
+            }
+
+            .main-form label {
+                font-size: 16px;
+            }
+
+            .main-form input[type="number"] {
+                font-size: 14px;
+            }
+
+            .main-form button {
+                font-size: 14px;
+            }
+
+            .main-form #result {
+                font-size: 18px;
+            }
+
+            .time {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+
+            .history-menu {
+                width: 180px;
+                padding: 10px;
+            }
+
+            .history-menu h2 {
+                font-size: 18px;
+            }
+
+            .history-menu ul li {
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 
@@ -170,9 +297,8 @@
         <div class="main-form">
             <h1>Рассчёт максимального количества баллов</h1>
             <label for="amount">Введите сумму:</label>
-            <input type="number" id="amount" name="amount" onkeypress="handleKeyPress(event)"
-                placeholder="Введите сумму">
-            <button onclick="calculatePoints()">Рассчитать</button>
+            <input type="number" id="amount" maxlength="9" name="amount" placeholder="Введите сумму">
+            <button>Рассчитать</button>
             <p id="result"></p>
 
             <details id="details">
@@ -251,6 +377,10 @@
                 <p>Текущее время: <time id="currentTime"></time></p>
             </div>
         </div>
+        <div class="history-menu">
+            <h2>История подсчётов</h2>
+            <ul id="history-list"></ul>
+        </div>
     </div>
 
     <script>
@@ -259,20 +389,71 @@
         details.addEventListener('toggle', () => {
             const form = document.querySelector('.main-form');
             if (details.open) {
-                form.style.height = '850px'; // Увеличенная высота
+                form.style.height = 'auto'; // Автоматическая высота
             } else {
-                form.style.height = '650px'; // Оригинальная высота
+                form.style.height = 'auto'; // Автоматическая высота
             }
         });
 
+        const historyList = document.getElementById('history-list');
+        const maxHistoryEntries = 12;
+
+        let isCalculating = false;
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                if (!isCalculating) {
+                    calculatePoints();
+                }
+            }
+        }
+
+        function showHistoryMenu() {
+            const historyMenu = document.querySelector('.history-menu');
+            if (historyMenu) {
+                historyMenu.style.right = '20px';
+            }
+        }
+
+        function addToHistory(amount, points) {
+            if (!historyList) return;
+
+            const listItem = document.createElement('li');
+            const currentTime = new Date().toLocaleTimeString();
+            listItem.textContent = `Сумма: ${amount}, Баллы: ${points}, Время: ${currentTime}`;
+
+            historyList.insertBefore(listItem, historyList.firstChild);
+
+            if (historyList.children.length > maxHistoryEntries) {
+                historyList.removeChild(historyList.lastChild);
+            }
+        }
+
         function calculatePoints() {
-            const amount = parseFloat(document.getElementById('amount').value);
+            if (isCalculating) return;
+            isCalculating = true;
+
+            const amountInput = document.getElementById('amount');
+            if (!amountInput) {
+                console.error('Поле ввода не найдено');
+                isCalculating = false;
+                return;
+            }
+
+            const amount = parseFloat(amountInput.value);
+            if (isNaN(amount) || amount < 0) {
+                alert('Пожалуйста, введите корректную сумму.');
+                isCalculating = false;
+                return;
+            }
+
             let maxPoints = 0;
 
             if (amount >= 1 && amount <= 299) {
-                maxPoints = amount * 1.00; // 1 к 1
+                maxPoints = amount * 1.00;
             } else if (amount >= 300 && amount <= 999) {
-                maxPoints = amount * 0.50; // 1 к 0.5
+                maxPoints = amount * 0.50;
             } else if (amount >= 1000 && amount <= 4999) {
                 maxPoints = amount * 0.20;
             } else if (amount >= 5000 && amount <= 9999) {
@@ -282,26 +463,40 @@
             } else if (amount >= 20000 && amount <= 24999) {
                 maxPoints = amount * 0.10;
             } else if (amount >= 25000 && amount <= 79999) {
-                maxPoints = amount * 0.04; // 4%
+                maxPoints = amount * 0.04;
             } else if (amount >= 80000) {
-                maxPoints = 4000.00; // Фиксированное значение для суммы 80 000 руб и более
+                maxPoints = 4000.00;
             }
 
-            document.getElementById('result').innerText = `Максимальное количество баллов: ${maxPoints.toFixed(0)} (свыше согласовать с менеджером).`;
-        }
-
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                calculatePoints();
+            const resultText = `Максимальное количество баллов: ${maxPoints.toFixed(0)} (свыше согласовать с менеджером).`;
+            const resultElement = document.getElementById('result');
+            if (resultElement) {
+                resultElement.innerText = resultText;
             }
+
+            addToHistory(amount, maxPoints.toFixed(0));
+            showHistoryMenu();
+
+            isCalculating = false;
         }
 
-        var timeElement = document.getElementById('currentTime');
-        setInterval(function () {
-            var currentTime = new Date();
-            timeElement.textContent = currentTime.toLocaleTimeString();
-        }, 1000);
+        const calculateButton = document.querySelector('.main-form button');
+        if (calculateButton) {
+            calculateButton.addEventListener('click', calculatePoints);
+        }
 
+        const amountInput = document.getElementById('amount');
+        if (amountInput) {
+            amountInput.addEventListener('keypress', handleKeyPress);
+        }
+
+        if (amountInput) {
+            amountInput.addEventListener('input', () => {
+                if (amountInput.value.length > 9) {
+                    amountInput.value = amountInput.value.slice(0, 9);
+                }
+            });
+        }
     </script>
 </body>
 
