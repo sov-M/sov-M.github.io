@@ -223,6 +223,42 @@
             margin-bottom: 10px;
             text-shadow: 1px 1px 2px rgba(255, 18, 18, 0.952);
         }
+
+        .date-calculator {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.date-calculator label {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.date-calculator input[type="date"],
+.date-calculator select {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.date-calculator button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.date-calculator button:hover {
+    background-color: red;
+    scale: 1.5;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
     </style>
 </head>
 
@@ -316,6 +352,20 @@
             <h2>История подсчётов</h2>
             <ul id="history-list"></ul>
         </div>
+            <div class="date-calculator">
+        <label for="start-date">Выберите дату:</label>
+        <input type="date" id="start-date" value="<?php echo date('Y-m-d'); ?>">
+        
+        <label for="days">Выберите количество дней:</label>
+        <select id="days">
+            <option value="90">90 дней</option>
+            <option value="180">180 дней</option>
+        </select>
+        
+        <button onclick="calculateDate()">Рассчитать</button>
+        
+        <p id="result-date"></p>
+    </div>
     </div>
 
     <script>
@@ -452,6 +502,28 @@
             var currentTime = new Date();
             timeElement.textContent = currentTime.toLocaleTimeString();
         }, 1000);
+
+        function calculateDate() {
+    const startDateInput = document.getElementById('start-date');
+    const daysSelect = document.getElementById('days');
+    const resultDateElement = document.getElementById('result-date');
+
+    const startDate = new Date(startDateInput.value);
+    const days = parseInt(daysSelect.value);
+
+    if (isNaN(startDate.getTime())) {
+        alert('Пожалуйста, выберите корректную дату.');
+        return;
+    }
+
+    const endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + days);
+
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedEndDate = endDate.toLocaleDateString('ru-RU', options);
+
+    resultDateElement.innerText = `Дата через ${days} дней: ${formattedEndDate}`;
+}
     </script>
 </body>
 
